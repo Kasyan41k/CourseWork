@@ -8,6 +8,8 @@ public class BarrierSpawner : MonoBehaviour
     private GameObject _barrierPrefab;
     [SerializeField]
     private float _distanceAfterCar;
+    [SerializeField]
+    private GameObject _road    ;
 
     private List<GameObject> _carsInScene;
     private GameObject _barrierInScene = null;
@@ -35,11 +37,14 @@ public class BarrierSpawner : MonoBehaviour
                                                     car.transform.position.y,
                                                     car.transform.position.z);
 
-                _barrierInScene = Instantiate(_barrierPrefab, spawnPosition, _barrierPrefab.transform.rotation);
+                if (_road.transform.position.x + _road.transform.localScale.x / 2 > spawnPosition.x)
+                {
+                    _barrierInScene = Instantiate(_barrierPrefab, spawnPosition, _barrierPrefab.transform.rotation);
 
-                UpdateCarsInfoByBarrier();
+                    UpdateCarsInfoByBarrier();
 
-                break;
+                    break;
+                }
             }
         }
 

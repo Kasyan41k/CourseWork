@@ -97,5 +97,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startSpeed: 200
   _zoneReaction: 8
-  _slowingDownSpeed: 200
+  _slowingDownSpeed: 120
   _speed: 0

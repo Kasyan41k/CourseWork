@@ -9,17 +9,30 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _road;
     [SerializeField]
-    private Text _endGameStatistics;
+    private Text _endGameStatistic;
     [SerializeField]
-    private GameObject _statistics;
+    private GameObject _statistic;
     [SerializeField]
     private GameObject _buttonRestart;
+
+    [SerializeField]
+    private GameObject _startScreen;
+    [SerializeField]
+    private InputField _speedContainer;
+    [SerializeField]
+    private CarController _carController;
+
     private List<GameObject> _carsInScene;
     private int countSuccessfulCars;
 
+    private void Awake()
+    {
+        Time.timeScale = 0f;
+    }
+
     void Start()
     {
-        StartCoroutine(StopGame());
+        StartCoroutine(StopProgram());
         _carsInScene = gameObject.GetComponent<CarSpawner>().GetCarsInScene();
     }
 
@@ -44,15 +57,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator StopGame()
+    private IEnumerator StopProgram()
     {
         yield return new WaitForSeconds(60f);
 
         Time.timeScale = 0f;
 
-        _statistics.SetActive(true);
+        _statistic.SetActive(true);
         _buttonRestart.SetActive(true);
-        _endGameStatistics.text += countSuccessfulCars + "cars\nsuccessful\ndrove";
+        _endGameStatistic.text += countSuccessfulCars + " cars\nsuccessful\ndrove";
+    }
+
+    public void StartGame()
+    {
+        float speed = float.Parse(_speedContainer.text);
+        if (speed > 0)
+        {
+            _carController._startSpeed = speed;
+        }
+        _startScreen.SetActive(false);
+        Time.timeScale = 1f;    
     }
 
     public void RestartGame()

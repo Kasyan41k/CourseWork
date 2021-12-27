@@ -19,7 +19,7 @@ public class CarController : MonoBehaviour
     private float _carSize;
     private bool _needToStop = false;
     private bool _needToSpeedUp = false;
-    private bool _needDeleteCar = false;
+    private bool _needToDeleteCar = false;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
-        if (_needDeleteCar)
+        if (_needToDeleteCar)
             return;
 
         foreach (var otherCar in _carsInScene)
@@ -70,14 +70,14 @@ public class CarController : MonoBehaviour
             }
         }
     }
-    // ===> ===> ===>
+    
     private bool CarIsCrashedInOtherCar(GameObject nextCar)
     {
-        Vector2 prevoiusCar = gameObject.transform.position;
+        Vector2 previousCar = gameObject.transform.position;
         Vector2 nextCarPosition = nextCar.transform.position;
 
-        return prevoiusCar.x + _carSize / 2 >= nextCarPosition.x - _carSize / 2 &&
-               prevoiusCar.x + _carSize / 2 <= nextCarPosition.x + _carSize / 2;
+        return previousCar.x + _carSize / 2 >= nextCarPosition.x - _carSize / 2 &&
+               previousCar.x + _carSize / 2 <= nextCarPosition.x + _carSize / 2;
     }
 
     private bool CarIsCrashedInBarrier()
@@ -119,7 +119,7 @@ public class CarController : MonoBehaviour
     {
         _startSpeed = 0;
         _speed = 0;
-        _needDeleteCar = true;
+        _needToDeleteCar = true;
         StartCoroutine(DeleteCar());
     }
 
